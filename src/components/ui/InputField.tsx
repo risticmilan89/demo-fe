@@ -1,15 +1,26 @@
 import { FC } from "react";
-import Input from "./Input";
+import { UseFormRegister } from "react-hook-form";
 
-const InputField: FC<{ name: string; label: string; type?: string }> = ({
+type InputFieldPropsT = {
+  name: string;
+  label: string;
+  type?: string;
+  register: UseFormRegister<any>;
+};
+
+const InputField: FC<InputFieldPropsT> = ({
   name,
   label,
   type = "text",
+  register,
 }) => {
   return (
     <div>
       <label htmlFor={name}>{label}</label>
-      <Input type={type} name={name} />
+      <input
+        type={type}
+        {...register(name, { required: `${label} is required.` })}
+      />
     </div>
   );
 };
