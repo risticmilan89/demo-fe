@@ -1,9 +1,9 @@
-import Signup from "./pages/credentials/Signup";
+import Router from "./Router";
 
 const App = () => {
   return (
     <div>
-      <Signup />
+      <Router />
     </div>
   );
 };

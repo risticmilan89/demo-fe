@@ -1,11 +1,11 @@
 import Button from "../../components/Button";
 import InputField from "../../components/ui/InputField";
-import LoginLayout from "../../templates/LoginLayout";
+import MainLayout from "../../templates/MainLayout";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 
-const Signup = () => {
+const SignupPage = () => {
   const {
     handleSubmit,
     register,
@@ -20,7 +20,7 @@ const Signup = () => {
   };
 
   return (
-    <LoginLayout>
+    <MainLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField register={register} name="username" label="Username" />
         <InputField
@@ -49,8 +49,8 @@ const Signup = () => {
         />
         <Button>Sign up</Button>
       </form>
-    </LoginLayout>
+    </MainLayout>
   );
 };
 
-export default Signup;
+export default SignupPage;
