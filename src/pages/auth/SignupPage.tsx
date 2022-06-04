@@ -4,6 +4,8 @@ import MainLayout from "../../templates/MainLayout";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
+import FormLayout from "../../templates/FormLayout";
+import EyeButton from "../../components/ui/EyeButton";
 
 const SignupPage = () => {
   const {
@@ -21,7 +23,7 @@ const SignupPage = () => {
 
   return (
     <MainLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <FormLayout title="Sign up" onSubmit={handleSubmit(onSubmit)}>
         <InputField register={register} name="username" label="Username" />
         <InputField
           register={register}
@@ -29,16 +31,17 @@ const SignupPage = () => {
           name="email"
           label="Email"
         />
-        <div>
+        <div className="flex relative">
           <InputField
             register={register}
             type={passwordFieldType}
             name="password"
             label="Password"
           />
-          <button onClick={() => showPasswordSet((current) => !current)}>
-            show password
-          </button>
+          <EyeButton
+            show={showPassword}
+            onClick={() => showPasswordSet((current) => !current)}
+          />
         </div>
 
         <InputField
@@ -47,8 +50,11 @@ const SignupPage = () => {
           name="password2"
           label="Confirm Password"
         />
-        <Button>Sign up</Button>
-      </form>
+
+        <div className="grid mt-6">
+          <Button>Sign up</Button>
+        </div>
+      </FormLayout>
     </MainLayout>
   );
 };
