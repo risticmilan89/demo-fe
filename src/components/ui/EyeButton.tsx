@@ -6,7 +6,7 @@ const EyeButton: FC<{ show: boolean; onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <button className="absolute right-0 top-0" onClick={onClick}>
+    <button type="button" className="absolute right-0 top-0" onClick={onClick}>
       {show ? <IoEyeOutline size={24} /> : <IoEyeOffOutline size={24} />}
     </button>
   );

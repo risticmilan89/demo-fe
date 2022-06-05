@@ -2,10 +2,15 @@ import Button from "../../components/Button";
 import InputField from "../../components/ui/InputField";
 import MainLayout from "../../templates/MainLayout";
 import { useForm } from "react-hook-form";
-
 import { useState } from "react";
 import FormLayout from "../../templates/FormLayout";
 import EyeButton from "../../components/ui/EyeButton";
+import { usersApi } from "../../api";
+import { CreateUserT } from "../../types";
+import { useAppDispatch } from "../../store/store";
+import { uiActions } from "../../store/slices/uiSlice";
+import { useNavigate } from "react-router-dom";
+import spinner from "../../assets/loading.gif";
 
 const SignupPage = () => {
   const {
@@ -14,11 +19,28 @@ const SignupPage = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, showPasswordSet] = useState(false);
-
   const passwordFieldType = showPassword ? "text" : "password";
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const onSubmit = (formData: any) => {
-    console.log({ formData });
+  const [loading, loadingSet] = useState(false);
+  const [notify, notifySet] = useState<null | string>(null);
+
+  const onSubmit = async (formData: any) => {
+    const data = formData as CreateUserT;
+    if (loading) return;
+
+    loadingSet(true);
+    try {
+      await usersApi.createUser(data);
+
+      loadingSet(true);
+      dispatch(uiActions.setUsernameValue(data.username));
+      navigate("/login");
+    } catch {
+      loadingSet(false);
+      notifySet("Failed to create a user");
+    }
   };
 
   return (
@@ -43,17 +65,16 @@ const SignupPage = () => {
             onClick={() => showPasswordSet((current) => !current)}
           />
         </div>
-
-        <InputField
-          register={register}
-          type={passwordFieldType}
-          name="password2"
-          label="Confirm Password"
-        />
-
         <div className="grid mt-6">
-          <Button>Sign up</Button>
+          <Button>
+            {loading ? (
+              <img className="h-7 w-7" src={spinner} alt="" />
+            ) : (
+              <p>Sign in</p>
+            )}
+          </Button>
         </div>
+        {notify && <p>{notify}</p>}
       </FormLayout>
     </MainLayout>
   );

@@ -1,42 +1,45 @@
 import { useSelector } from "react-redux";
 import { postsSelector } from "../../store/slices/postsSlice";
 import PostsListItem from "./PostsListItem";
-import SearchPosts from "./SearchPosts";
 import spinner from "../../assets/loading.gif";
 import { FaExclamation } from "react-icons/fa";
+import { uiSelector } from "../../store/slices/uiSlice";
 
 const PostsList = () => {
   const { posts, postsLoading, postsError } = useSelector(postsSelector);
-
-  let postsContainer;
+  const { searchValue } = useSelector(uiSelector);
 
   if (postsLoading) {
-    postsContainer = (
+    return (
       <div className="flex justify-center mt-16">
         <img src={spinner} className="scale-50" alt="loading spinner" />
       </div>
     );
-  } else if (postsError) {
-    postsContainer = (
+  }
+
+  if (postsError) {
+    return (
       <div className="flex flex-col items-center gap-6 text-2xl my-24">
         <FaExclamation size={32} />
         <p>Failed to get posts from server</p>
       </div>
     );
-  } else {
-    postsContainer = posts.map((singlePost) => (
-      <PostsListItem key={singlePost.id} post={singlePost} />
-    ));
+  }
+
+  if (posts.length === 0 && searchValue.length > 0) {
+    return <p>No posts match your search</p>;
+  }
+
+  if (posts.length === 0) {
+    return <p>There are no posts to display</p>;
   }
 
   return (
-    <div>
-      <h3 className="text-5xl mb-6 pb-3 font-semibold border-b-4 border-b-orange-300">
-        Posts
-      </h3>
-      <SearchPosts />
-      {postsContainer}
-    </div>
+    <>
+      {posts.map((singlePost) => (
+        <PostsListItem key={singlePost.id} post={singlePost} />
+      ))}
+    </>
   );
 };
 

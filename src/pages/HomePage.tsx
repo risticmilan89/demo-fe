@@ -1,10 +1,10 @@
-import PostsList from "../components/posts/PostsList";
 import MainLayout from "../templates/MainLayout";
+import PostsDisplay from "../components/posts/PostsDisplay";
 
 const HomePage = () => {
   return (
     <MainLayout>
-      <PostsList />
+      <PostsDisplay />
     </MainLayout>
   );
 };

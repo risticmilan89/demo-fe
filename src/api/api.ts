@@ -1,8 +1,7 @@
 import _axios from "axios";
-import { PostT } from "../types";
+import { CreateUserT, LoginUserT, PostT } from "../types";
 
-const baseURL =
-  process.env.REACT_APP_SERVER_URL || "https://jsonplaceholder.typicode.com";
+const baseURL = process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
 
 const axios = _axios.create({
   baseURL,
@@ -11,4 +10,11 @@ const axios = _axios.create({
 
 export const postsApi = {
   getPosts: (): Promise<PostT[]> => axios.get("/posts").then((r) => r.data),
+};
+
+export const usersApi = {
+  createUser: (user: CreateUserT) =>
+    axios.post("/users", { ...user }).then((r) => r.data),
+  login: (user: LoginUserT) =>
+    axios.post("/login", { ...user }).then((r) => r.data),
 };
