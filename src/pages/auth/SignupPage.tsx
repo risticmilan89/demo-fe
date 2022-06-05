@@ -22,7 +22,6 @@ const SignupPage = () => {
   const passwordFieldType = showPassword ? "text" : "password";
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const [loading, loadingSet] = useState(false);
   const [notify, notifySet] = useState<null | string>(null);
 

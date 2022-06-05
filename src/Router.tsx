@@ -3,7 +3,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import CreatePostPage from "./pages/posts/CreatePostPage";
-import PostDetailsPage from "./pages/PostDetailsPage";
+import PostDetailsPage from "./pages/posts/PostDetailsPage";
 import PostsByAuthorPage from "./pages/posts/PostsByAuthorPage";
 
 const Router = () => {
