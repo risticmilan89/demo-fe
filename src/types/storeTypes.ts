@@ -3,6 +3,9 @@ export type PostT = {
   body: string;
   id: number;
   userId: number;
+  author: {
+    username: string;
+  };
 };
 
 export type PostsStateT = {

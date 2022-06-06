@@ -5,9 +5,11 @@ import SignupPage from "./pages/auth/SignupPage";
 import CreatePostPage from "./pages/posts/CreatePostPage";
 import PostDetailsPage from "./pages/posts/PostDetailsPage";
 import PostsByAuthorPage from "./pages/posts/PostsByAuthorPage";
+import { useSelector } from "react-redux";
+import { authSelector } from "./store/slices/authSlice";
 
 const Router = () => {
-  const accessKey = "";
+  const { accessToken } = useSelector(authSelector);
 
   const privateRoutes = (
     <>
@@ -20,7 +22,7 @@ const Router = () => {
 
   return (
     <Routes>
-      {accessKey && privateRoutes}
+      {accessToken && privateRoutes}
       <Route path="/" element={<HomePage />} />
       <Route path={ROUTE_LIST.PUBLIC.LOGIN} element={<LoginPage />} />
       <Route path={ROUTE_LIST.PUBLIC.SIGNUP} element={<SignupPage />} />
@@ -43,6 +45,6 @@ export const ROUTE_LIST = {
     AUTHOR: "/posts/author/:username",
   },
   PRIVATE: {
-    CREATE_POST: "create-post",
+    CREATE_POST: "/create-post",
   },
 };

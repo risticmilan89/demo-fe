@@ -69,7 +69,7 @@ const LoginPage = () => {
             onClick={() => showPasswordSet((current) => !current)}
           />
         </div>
-        <div className="grid mt-6">
+        <div className="mt-6">
           <Button>
             {loading ? (
               <img className="h-7 w-7" src={spinner} alt="" />

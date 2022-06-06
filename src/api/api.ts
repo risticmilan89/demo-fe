@@ -1,3 +1,4 @@
+import { CreatePostT } from "./../types/requestTypes";
 import _axios from "axios";
 import { CreateUserT, LoginUserT, PostT } from "../types";
 
@@ -10,6 +11,7 @@ const axios = _axios.create({
 
 export const postsApi = {
   getPosts: (): Promise<PostT[]> => axios.get("/posts").then((r) => r.data),
+  createPost: (post: CreatePostT) => axios.post("/posts", { ...post }),
 };
 
 export const usersApi = {

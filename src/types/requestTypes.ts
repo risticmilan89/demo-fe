@@ -8,3 +8,9 @@ export type LoginUserT = {
   username: string;
   password: string;
 };
+
+export type CreatePostT = {
+  title: string;
+  body: string;
+  username: string;
+};

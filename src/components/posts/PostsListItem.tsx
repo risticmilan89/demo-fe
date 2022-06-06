@@ -1,14 +1,20 @@
 import { FC } from "react";
 import { PostT } from "../../types";
 
-const PostsListItem: FC<{ post: PostT }> = ({ post: { title, body } }) => {
+const PostsListItem: FC<{ post: PostT }> = ({ post }) => {
+  const {
+    title,
+    body,
+    author: { username },
+  } = post;
+
   return (
     <div className="bg-white rounded-md p-4 shadow-md mb-6 relative">
       <h2 className="text-2xl font-semibold mb-2 capitalize">{title}</h2>
       <p>{body}</p>
       <div>
         <p className="mt-4">
-          Author: <span className="font-semibold"> John Smith</span>
+          Author: <span className="font-semibold">{username}</span>
         </p>
       </div>
 
