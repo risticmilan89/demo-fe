@@ -1,11 +1,12 @@
 import MainLayout from "../../templates/MainLayout";
-import { FieldValue, FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
-import { authSelector } from "../../store/slices/authSlice";
+import { authActions, authSelector } from "../../store/slices/authSlice";
 import { useState } from "react";
 import { postsApi } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/store";
 
 const CreatePostPage = () => {
   const {
@@ -14,9 +15,10 @@ const CreatePostPage = () => {
     formState: { errors },
   } = useForm();
   const [loading, loadingSet] = useState(false);
-  const [notify, notifySet] = useState("something went wrong");
-  const { username } = useSelector(authSelector);
+  const [notify, notifySet] = useState("");
+  const { username, accessToken } = useSelector(authSelector);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const createPost = async (formData: FieldValues) => {
     if (loading) return;
@@ -32,11 +34,16 @@ const CreatePostPage = () => {
 
     loadingSet(true);
     try {
-      await postsApi.createPost(newPost);
+      await postsApi.createPost(newPost, accessToken);
       loadingSet(true);
       // dispatch(uiActions.setUsernameValue(data.username));
       navigate("/");
-    } catch {
+    } catch (error: any) {
+      if (error?.response.status === 401) {
+        navigate("/login");
+        dispatch(authActions.resetCredentials());
+      }
+
       loadingSet(false);
       notifySet("Failed to save a post");
     }

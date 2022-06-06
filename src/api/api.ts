@@ -4,14 +4,29 @@ import { CreateUserT, LoginUserT, PostT } from "../types";
 
 const baseURL = process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
 
+const bearerConfig = (token: string) => ({
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 const axios = _axios.create({
   baseURL,
   timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export const postsApi = {
   getPosts: (): Promise<PostT[]> => axios.get("/posts").then((r) => r.data),
-  createPost: (post: CreatePostT) => axios.post("/posts", { ...post }),
+  createPost: (post: CreatePostT, token: string) =>
+    axios.post(
+      "/posts",
+      { ...post },
+      bearerConfig(token)
+      // { headers: { Authorization: `Bearer sometoken` } }
+    ),
 };
 
 export const usersApi = {
