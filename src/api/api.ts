@@ -20,6 +20,8 @@ const axios = _axios.create({
 
 export const postsApi = {
   getPosts: (): Promise<PostT[]> => axios.get("/posts").then((r) => r.data),
+  getPostsByAuthor: (username: string): Promise<PostT[]> =>
+    axios.get(`/posts/${username}`).then((r) => r.data),
   createPost: (post: CreatePostT, token: string) =>
     axios.post(
       "/posts",

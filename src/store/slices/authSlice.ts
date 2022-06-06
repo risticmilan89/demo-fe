@@ -16,6 +16,8 @@ export const authSlice = createSlice({
     ) {
       state.accessToken = action.payload.token;
       state.username = action.payload.username;
+      localStorage.setItem("accessToken", action.payload.token);
+      localStorage.setItem("username", action.payload.username);
     },
 
     resetCredentials(state) {

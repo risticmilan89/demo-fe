@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { PostT } from "../../types";
 
 const PostsListItem: FC<{ post: PostT }> = ({ post }) => {
@@ -14,7 +15,10 @@ const PostsListItem: FC<{ post: PostT }> = ({ post }) => {
       <p>{body}</p>
       <div>
         <p className="mt-4">
-          Author: <span className="font-semibold">{username}</span>
+          Author:{" "}
+          <Link to={`/posts/${username}`} className="font-semibold">
+            {username}
+          </Link>
         </p>
       </div>
 

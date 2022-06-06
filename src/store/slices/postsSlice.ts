@@ -43,8 +43,22 @@ const getPosts = createAsyncThunk("posts/getPosts", async (_, { dispatch }) => {
   }
 });
 
+const getPostsByUsername = createAsyncThunk(
+  "posts/getPostsByUsername",
+  async (username: string, { dispatch }) => {
+    dispatch(postsSlice.actions.getPosts());
+    try {
+      const postsData = await postsApi.getPostsByAuthor(username);
+      dispatch(postsSlice.actions.setPosts(postsData));
+    } catch {
+      dispatch(postsSlice.actions.setPostsError());
+    }
+  }
+);
+
 export const postsActions = {
   getPosts,
+  getPostsByUsername,
 };
 
 export const postsSelector = (state: StoreT) => state.postsStore;
