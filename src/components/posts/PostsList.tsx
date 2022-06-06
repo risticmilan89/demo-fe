@@ -1,12 +1,16 @@
 import { useSelector } from "react-redux";
-import { postsSelector } from "../../store/slices/postsSlice";
+import {
+  filteredPostSelector,
+  postsSelector,
+} from "../../store/slices/postsSlice";
 import PostsListItem from "./PostsListItem";
 import spinner from "../../assets/loading.gif";
 import { FaExclamation } from "react-icons/fa";
 import { uiSelector } from "../../store/slices/uiSlice";
 
 const PostsList = () => {
-  const { posts, postsLoading, postsError } = useSelector(postsSelector);
+  const { postsLoading, postsError } = useSelector(postsSelector);
+  const { filteredPosts: posts } = useSelector(filteredPostSelector);
   const { searchValue } = useSelector(uiSelector);
 
   if (postsLoading) {
@@ -27,11 +31,19 @@ const PostsList = () => {
   }
 
   if (posts.length === 0 && searchValue.length > 0) {
-    return <p>No posts match your search</p>;
+    return (
+      <p className="text-2xl text-gray-500 p-20 text-center bg-slate-100">
+        No posts match your search
+      </p>
+    );
   }
 
   if (posts.length === 0) {
-    return <p>There are no posts to display</p>;
+    return (
+      <p className="text-2xl text-gray-500 p-20 text-center bg-slate-100">
+        There are no posts to display
+      </p>
+    );
   }
 
   return (

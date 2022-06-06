@@ -49,4 +49,14 @@ export const postsActions = {
 
 export const postsSelector = (state: StoreT) => state.postsStore;
 
+export const filteredPostSelector = (state: StoreT) => {
+  const searchValue = state.uiStore.searchValue.toLocaleLowerCase();
+  const filteredPosts = state.postsStore.posts.filter(
+    (singlePost) =>
+      singlePost.title.includes(searchValue) ||
+      singlePost.body.includes(searchValue)
+  );
+  return { filteredPosts };
+};
+
 export const postsReducer = postsSlice.reducer;

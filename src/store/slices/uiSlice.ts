@@ -20,10 +20,11 @@ export const uiSlice = createSlice({
   },
 });
 
-const { setUsernameValue } = uiSlice.actions;
+const { setUsernameValue, setSearchValue } = uiSlice.actions;
 
 export const uiActions = {
   setUsernameValue,
+  setSearchValue,
 };
 
 export const uiSelector = (state: StoreT) => state.uiStore;
